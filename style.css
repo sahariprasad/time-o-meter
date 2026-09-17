@@ -1,0 +1,326 @@
+        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@200;300;400;600&display=swap');
+
+        :root {
+            --bg-color: #000000;
+            --text-color: #f8fafc;
+            --accent-color: #ebc034;
+            --pace-color: #10b981;
+            --speed-track-color: #2b2203;
+            --pace-track-color: #032b1e;
+            --bezel-color: #1a1a1a;
+            --panel-bg: #0a0a0a;
+            --font-family: 'Outfit', -apple-system, sans-serif;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Outfit', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100dvh;
+            overflow-x: hidden;
+            padding: 1rem;
+            box-sizing: border-box;
+        }
+
+        .dashboard {
+            position: relative;
+            width: 100%;
+            max-width: 1200px;
+            background: var(--panel-bg);
+            border-radius: 2rem;
+            padding: 2rem;
+            box-sizing: border-box;
+            border: 1px solid #1f1f1f;
+            box-shadow: inset 0 0 50px rgba(0,0,0,0.8), 0 20px 40px rgba(0,0,0,0.5);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        /* Cluster Layout Container */
+        .cluster-wrapper {
+            display: flex;
+            flex-direction: column; /* Portrait default */
+            align-items: center;
+            gap: 2.5rem;
+            width: 100%;
+        }
+
+        .cluster-center {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 1.25rem;
+            padding: 1rem;
+            background: rgba(20, 20, 20, 0.5);
+            border-radius: 1rem;
+            border: 1px solid #222;
+            width: 100%;
+            max-width: 300px;
+        }
+
+        /* SVG Gauges */
+        .gauge-container {
+            position: relative;
+            width: clamp(140px, min(85vw, 40vh), 400px);
+            aspect-ratio: 1 / 1;
+            flex-shrink: 0;
+            border-radius: 50%;
+            background: #000;
+            box-shadow: inset 0 0 20px rgba(0,0,0,1), 0 0 15px rgba(0,0,0,0.8);
+        }
+
+        .gauge-svg {
+            transform: rotate(135deg);
+            width: 100%;
+            height: 100%;
+        }
+
+        .gauge-bezel {
+            fill: none;
+            stroke: var(--bezel-color);
+            stroke-width: 6;
+        }
+
+        .gauge-track {
+            fill: none;
+            stroke-width: 6;
+            stroke-dasharray: 471.24 628.32; /* 270 degrees (r=100) */
+        }
+
+        .gauge-fill {
+            fill: none;
+            stroke-width: 6;
+            stroke-dasharray: 471.24 628.32;
+            stroke-dashoffset: 471.24;
+            transition: stroke-dashoffset 0.2s linear;
+        }
+        
+        .speed-fill { stroke: var(--accent-color); }
+        .pace-fill { stroke: var(--pace-color); }
+        .speed-track { stroke: var(--speed-track-color); }
+        .pace-track { stroke: var(--pace-track-color); }
+
+        .gauge-center {
+            position: absolute;
+            top: 60%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+        }
+
+        .gauge-value {
+            font-size: clamp(1.8rem, 8vw, 2.8rem);
+            font-weight: 300;
+            line-height: 1;
+            color: #fff;
+        }
+
+        .gauge-unit {
+            font-size: clamp(0.75rem, 3vw, 0.9rem);
+            font-weight: 200;
+            color: #94a3b8;
+            margin-top: 0.25rem;
+        }
+        
+        .gauge-label {
+            font-size: clamp(0.5rem, 2vw, 0.65rem);
+            font-weight: 400;
+            color: #475569;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-top: 0.5rem;
+        }
+
+        /* Controls */
+        .controls-row {
+            display: flex;
+            gap: 0.25rem;
+            background: #111;
+            padding: 0.25rem;
+            border-radius: 0.5rem;
+            border: 1px solid #333;
+        }
+
+        button.btn-pill {
+            background: transparent;
+            border: none;
+            color: #64748b;
+            padding: 0.4rem 0.8rem;
+            border-radius: 0.25rem;
+            font-family: inherit;
+            font-size: 0.8rem;
+            font-weight: 400;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        button.btn-pill:hover {
+            color: #fff;
+        }
+
+        button.btn-pill.active {
+            background: #333;
+            color: #fff;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.5);
+        }
+
+        #btn-start {
+            background: var(--accent-color);
+            color: #000;
+            border: none;
+            padding: 0.5rem 1.5rem;
+            border-radius: 0.5rem;
+            font-family: inherit;
+            font-weight: 600;
+            font-size: 0.85rem;
+            cursor: pointer;
+            width: 100%;
+            box-sizing: border-box;
+            transition: filter 0.2s;
+        }
+        #btn-start:active {
+            filter: brightness(0.8);
+        }
+
+        .status {
+            font-size: 0.65rem;
+            color: #64748b;
+            font-weight: 300;
+            text-align: center;
+        }
+        
+        /* Custom Range Slider */
+        input[type=range] {
+            -webkit-appearance: none;
+            width: 100%;
+            background: transparent;
+        }
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            height: 16px;
+            width: 16px;
+            border-radius: 50%;
+            background: var(--accent-color);
+            cursor: pointer;
+            margin-top: -6px;
+            box-shadow: 0 0 10px var(--accent-color);
+        }
+        input[type=range]::-webkit-slider-thumb:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 10px var(--accent-color);
+        }
+        input[type=range]::-webkit-slider-runnable-track {
+            width: 100%;
+            height: 4px;
+            cursor: pointer;
+            background: #333;
+            border-radius: 2px;
+        }
+
+        /* Landscape Mode Override */
+        @media (orientation: landscape) {
+            body {
+                padding: 0;
+                overflow: hidden; /* Prevent vertical scroll completely */
+                height: 100dvh;
+            }
+            .dashboard {
+                border-radius: 0;
+                border: none;
+                height: 100dvh;
+                max-height: 100dvh;
+                justify-content: center;
+                gap: 1rem;
+                padding: 0;
+            }
+            
+            /* Pull controls below the gauges in landscape */
+            .cluster-wrapper {
+                flex-direction: row;
+                flex-wrap: wrap;
+                justify-content: center;
+                align-items: center;
+                gap: 3rem; /* Space them out a bit more since they are bigger */
+                height: 100%;
+            }
+            
+            .gauge-container {
+                /* In landscape, width is constrained by half the screen width or full screen height */
+                width: clamp(140px, min(45vw, 85dvh), 450px);
+            }
+            
+            .gauge-value {
+                font-size: 2.5rem; 
+            }
+        }
+
+        /* Top-Left Gear Icon */
+        .icon-btn {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            background: transparent;
+            border: none;
+            color: #64748b;
+            font-size: 1.8rem;
+            cursor: pointer;
+            padding: 0.5rem;
+            line-height: 1;
+            z-index: 10;
+            transition: color 0.2s;
+        }
+        .icon-btn:hover {
+            color: #fff;
+        }
+
+        /* Modal Styles */
+        dialog {
+            background: var(--panel-bg);
+            border: 1px solid #333;
+            border-radius: 1rem;
+            padding: 1.5rem;
+            color: var(--text-color);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+            width: 90%;
+            max-width: 400px;
+            margin: auto;
+        }
+        dialog::backdrop {
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(5px);
+        }
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+        .modal-title {
+            font-size: 1.2rem;
+            font-weight: 300;
+            color: #64748b;
+            margin: 0;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        .close-btn {
+            background: transparent;
+            border: none;
+            color: #94a3b8;
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 0;
+            line-height: 1;
+        }
