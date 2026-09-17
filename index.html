@@ -8,9 +8,9 @@
         @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@200;300;400;600&display=swap');
 
         :root {
-            --bg-color: #030303;
-            --text-color: #e2e8f0;
-            --accent-color: #38bdf8;
+            --bg-color: #000000;
+            --text-color: #f8fafc;
+            --accent-color: #ebc034;
             --pace-color: #10b981;
             --track-color: #1e1e1e;
             --bezel-color: #1a1a1a;
@@ -351,7 +351,10 @@
                     <g id="speed-ticks"></g>
                     <circle class="gauge-track" cx="120" cy="120" r="100"></circle>
                     <circle id="speed-arc" class="gauge-fill speed-fill" cx="120" cy="120" r="100"></circle>
-                    <line id="speed-needle" x1="120" y1="120" x2="210" y2="120" stroke="url(#speed-grad)" stroke-width="3" style="transition: transform 0.2s linear; transform-box: view-box; transform-origin: center;" />
+                    <g id="speed-needle" style="transition: transform 0.2s linear; transform-origin: 120px 120px;">
+                        <line x1="214" y1="120" x2="226" y2="120" stroke="#000" stroke-width="6" />
+                        <line x1="215" y1="120" x2="225" y2="120" stroke="var(--accent-color)" stroke-width="3" />
+                    </g>
                 </svg>
                 <div class="gauge-center">
                     <div id="speed-val" class="gauge-value">0</div>
@@ -373,7 +376,10 @@
                     <g id="pace-ticks"></g>
                     <circle class="gauge-track" cx="120" cy="120" r="100"></circle>
                     <circle id="pace-arc" class="gauge-fill pace-fill" cx="120" cy="120" r="100"></circle>
-                    <line id="pace-needle" x1="120" y1="120" x2="210" y2="120" stroke="url(#pace-grad)" stroke-width="3" style="transition: transform 0.2s linear; transform-box: view-box; transform-origin: center;" />
+                    <g id="pace-needle" style="transition: transform 0.2s linear; transform-origin: 120px 120px;">
+                        <line x1="214" y1="120" x2="226" y2="120" stroke="#000" stroke-width="6" />
+                        <line x1="215" y1="120" x2="225" y2="120" stroke="var(--pace-color)" stroke-width="3" />
+                    </g>
                 </svg>
                 <div class="gauge-center">
                     <div id="pace-val" class="gauge-value">∞</div>
@@ -663,7 +669,7 @@
 
             let speedPercent = Math.min(displaySpeed / maxSpeed, 1.0);
             speedArc.style.strokeDashoffset = ARC_LENGTH - (speedPercent * ARC_LENGTH);
-            speedNeedle.setAttribute('transform', `rotate(${speedPercent * 270}, 120, 120)`);
+            speedNeedle.style.transform = `rotate(${speedPercent * 270}deg)`;
 
             let pacePercent = 0.0;
             if (displayPace !== Infinity) {
@@ -678,7 +684,7 @@
                 }
             }
             paceArc.style.strokeDashoffset = ARC_LENGTH - (pacePercent * ARC_LENGTH);
-            paceNeedle.setAttribute('transform', `rotate(${pacePercent * 270}, 120, 120)`);
+            paceNeedle.style.transform = `rotate(${pacePercent * 270}deg)`;
         }
 
         unitBtns.forEach(btn => {
