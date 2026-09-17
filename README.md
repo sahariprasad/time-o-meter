@@ -31,7 +31,7 @@ Since this project has zero external dependencies or build steps, running it is 
 
 1. Clone this repository:
    ```bash
-   git clone https://github.com/yourusername/time-o-meter.git
+   git clone https://github.com/sahariprasad/time-o-meter.git
    ```
 2. Navigate into the directory:
    ```bash
@@ -51,4 +51,4 @@ Since this project has zero external dependencies or build steps, running it is 
 To test the animations while sitting at your desk, open settings and switch to **Slider Preview** mode.
 
 ## Contributing
-Contributions, issues, and feature requests are welcome! Feel free to check the [issues page](https://github.com/yourusername/time-o-meter/issues).
+Contributions, issues, and feature requests are welcome! Feel free to check the [issues page](https://github.com/sahariprasad/time-o-meter/issues).
