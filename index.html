@@ -111,8 +111,8 @@
             transition: stroke-dashoffset 0.2s linear;
         }
         
-        .speed-fill { stroke: url(#speed-arc-grad); }
-        .pace-fill { stroke: url(#pace-arc-grad); }
+        .speed-fill { stroke: var(--accent-color); }
+        .pace-fill { stroke: var(--pace-color); }
 
         .gauge-center {
             position: absolute;
@@ -344,13 +344,8 @@
             <div class="gauge-container">
                 <svg class="gauge-svg" viewBox="0 0 240 240">
                     <defs>
-                        <linearGradient id="speed-needle-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <linearGradient id="speed-grad" x1="0%" y1="0%" x2="100%" y2="0%">
                             <stop offset="0%" stop-color="#38bdf8" stop-opacity="0" />
-                            <stop offset="100%" stop-color="#38bdf8" stop-opacity="1" />
-                        </linearGradient>
-                        <linearGradient id="speed-arc-grad" x1="20" y1="120" x2="220" y2="120" gradientUnits="userSpaceOnUse" gradientTransform="rotate(0, 120, 120)">
-                            <stop offset="0%" stop-color="#38bdf8" stop-opacity="0" />
-                            <stop offset="25%" stop-color="#38bdf8" stop-opacity="0" />
                             <stop offset="100%" stop-color="#38bdf8" stop-opacity="1" />
                         </linearGradient>
                     </defs>
@@ -358,7 +353,7 @@
                     <g id="speed-ticks"></g>
                     <circle class="gauge-track" cx="120" cy="120" r="100"></circle>
                     <circle id="speed-arc" class="gauge-fill speed-fill" cx="120" cy="120" r="100"></circle>
-                    <line id="speed-needle" x1="120" y1="120" x2="210" y2="120" stroke="url(#speed-needle-grad)" stroke-width="3" stroke-linecap="round" style="transition: transform 0.2s linear; transform-box: view-box; transform-origin: center;" />
+                    <line id="speed-needle" x1="120" y1="120" x2="210" y2="120" stroke="url(#speed-grad)" stroke-width="3" stroke-linecap="round" style="transition: transform 0.2s linear; transform-box: view-box; transform-origin: center;" />
                 </svg>
                 <div class="gauge-center">
                     <div id="speed-val" class="gauge-value">0</div>
@@ -371,13 +366,8 @@
             <div class="gauge-container">
                 <svg class="gauge-svg" viewBox="0 0 240 240">
                     <defs>
-                        <linearGradient id="pace-needle-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <linearGradient id="pace-grad" x1="0%" y1="0%" x2="100%" y2="0%">
                             <stop offset="0%" stop-color="#10b981" stop-opacity="0" />
-                            <stop offset="100%" stop-color="#10b981" stop-opacity="1" />
-                        </linearGradient>
-                        <linearGradient id="pace-arc-grad" x1="20" y1="120" x2="220" y2="120" gradientUnits="userSpaceOnUse" gradientTransform="rotate(0, 120, 120)">
-                            <stop offset="0%" stop-color="#10b981" stop-opacity="0" />
-                            <stop offset="25%" stop-color="#10b981" stop-opacity="0" />
                             <stop offset="100%" stop-color="#10b981" stop-opacity="1" />
                         </linearGradient>
                     </defs>
@@ -385,7 +375,7 @@
                     <g id="pace-ticks"></g>
                     <circle class="gauge-track" cx="120" cy="120" r="100"></circle>
                     <circle id="pace-arc" class="gauge-fill pace-fill" cx="120" cy="120" r="100"></circle>
-                    <line id="pace-needle" x1="120" y1="120" x2="210" y2="120" stroke="url(#pace-needle-grad)" stroke-width="3" stroke-linecap="round" style="transition: transform 0.2s linear; transform-box: view-box; transform-origin: center;" />
+                    <line id="pace-needle" x1="120" y1="120" x2="210" y2="120" stroke="url(#pace-grad)" stroke-width="3" stroke-linecap="round" style="transition: transform 0.2s linear; transform-box: view-box; transform-origin: center;" />
                 </svg>
                 <div class="gauge-center">
                     <div id="pace-val" class="gauge-value">∞</div>
@@ -528,16 +518,14 @@
             
             if (!isPace) {
                 // Linear Speed Scale
-                const tickStep = 10;
-                for (let val = 0; val <= maxValue; val += tickStep) {
-                    const percent = val / maxValue;
-                    const angle = startAngle + (percent * 270);
+                const numTicks = 10;
+                const angleStep = 270 / numTicks;
+                for (let i = 0; i <= numTicks; i++) {
+                    const angle = startAngle + (i * angleStep);
                     const rad = deg2rad(angle);
                     
-                    const isMajor = val % 40 === 0;
-                    
                     const rOuter = 95;
-                    const rInner = isMajor ? 85 : 88;
+                    const rInner = i % 2 === 0 ? 85 : 88;
                     
                     const x1 = center + rOuter * Math.cos(rad);
                     const y1 = center + rOuter * Math.sin(rad);
@@ -550,19 +538,21 @@
                     line.setAttribute("x2", x2);
                     line.setAttribute("y2", y2);
                     line.setAttribute("stroke", "#475569");
-                    line.setAttribute("stroke-width", isMajor ? "2" : "1");
+                    line.setAttribute("stroke-width", i % 2 === 0 ? "2" : "1");
                     groupEl.appendChild(line);
                     
-                    if (isMajor) {
+                    if (i % 2 === 0) {
                         const rText = 72;
                         const tx = center + rText * Math.cos(rad);
                         const ty = center + rText * Math.sin(rad);
+                        
+                        const val = Math.round((maxValue / numTicks) * i);
                         
                         const text = document.createElementNS("http://www.w3.org/2000/svg", "text");
                         text.setAttribute("x", tx);
                         text.setAttribute("y", ty);
                         text.setAttribute("fill", "#94a3b8");
-                        text.setAttribute("font-size", "12");
+                        text.setAttribute("font-size", "14");
                         text.setAttribute("font-family", "Outfit");
                         text.setAttribute("font-weight", "300");
                         text.setAttribute("text-anchor", "middle");
@@ -617,7 +607,7 @@
                         text.setAttribute("x", tx);
                         text.setAttribute("y", ty);
                         text.setAttribute("fill", "#94a3b8");
-                        text.setAttribute("font-size", "12");
+                        text.setAttribute("font-size", "14");
                         text.setAttribute("font-family", "Outfit");
                         text.setAttribute("font-weight", "300");
                         text.setAttribute("text-anchor", "middle");
@@ -676,7 +666,6 @@
             let speedPercent = Math.min(displaySpeed / maxSpeed, 1.0);
             speedArc.style.strokeDashoffset = ARC_LENGTH - (speedPercent * ARC_LENGTH);
             speedNeedle.setAttribute('transform', `rotate(${speedPercent * 270}, 120, 120)`);
-            document.getElementById('speed-arc-grad').setAttribute('gradientTransform', `rotate(${speedPercent * 270}, 120, 120)`);
 
             let pacePercent = 0.0;
             if (displayPace !== Infinity) {
@@ -692,7 +681,6 @@
             }
             paceArc.style.strokeDashoffset = ARC_LENGTH - (pacePercent * ARC_LENGTH);
             paceNeedle.setAttribute('transform', `rotate(${pacePercent * 270}, 120, 120)`);
-            document.getElementById('pace-arc-grad').setAttribute('gradientTransform', `rotate(${pacePercent * 270}, 120, 120)`);
         }
 
         unitBtns.forEach(btn => {
