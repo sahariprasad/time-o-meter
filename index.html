@@ -219,7 +219,11 @@
             background: var(--accent-color);
             cursor: pointer;
             margin-top: -6px;
-            box-shadow: 0 0 10px rgba(56, 189, 248, 0.5);
+            box-shadow: 0 0 10px var(--accent-color);
+        }
+        input[type=range]::-webkit-slider-thumb:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 10px var(--accent-color);
         }
         input[type=range]::-webkit-slider-runnable-track {
             width: 100%;
@@ -343,8 +347,8 @@
                 <svg class="gauge-svg" viewBox="0 0 240 240">
                     <defs>
                         <linearGradient id="speed-grad" x1="0%" y1="0%" x2="100%" y2="0%">
-                            <stop offset="0%" stop-color="#38bdf8" stop-opacity="0" />
-                            <stop offset="100%" stop-color="#38bdf8" stop-opacity="1" />
+                            <stop offset="0%" stop-color="var(--accent-color)" stop-opacity="0" />
+                            <stop offset="100%" stop-color="var(--accent-color)" stop-opacity="1" />
                         </linearGradient>
                     </defs>
                     <circle class="gauge-bezel" cx="120" cy="120" r="115"></circle>
@@ -352,8 +356,7 @@
                     <circle class="gauge-track" cx="120" cy="120" r="100"></circle>
                     <circle id="speed-arc" class="gauge-fill speed-fill" cx="120" cy="120" r="100"></circle>
                     <g id="speed-needle" style="transition: transform 0.2s linear; transform-origin: 120px 120px;">
-                        <line x1="214" y1="120" x2="226" y2="120" stroke="#000" stroke-width="6" />
-                        <line x1="215" y1="120" x2="225" y2="120" stroke="var(--accent-color)" stroke-width="3" />
+                        <polygon points="214,120 226,114 226,126" fill="var(--accent-color)" stroke="#9c7a10" stroke-width="2" stroke-linejoin="round" />
                     </g>
                 </svg>
                 <div class="gauge-center">
@@ -377,8 +380,7 @@
                     <circle class="gauge-track" cx="120" cy="120" r="100"></circle>
                     <circle id="pace-arc" class="gauge-fill pace-fill" cx="120" cy="120" r="100"></circle>
                     <g id="pace-needle" style="transition: transform 0.2s linear; transform-origin: 120px 120px;">
-                        <line x1="214" y1="120" x2="226" y2="120" stroke="#000" stroke-width="6" />
-                        <line x1="215" y1="120" x2="225" y2="120" stroke="var(--pace-color)" stroke-width="3" />
+                        <polygon points="214,120 226,114 226,126" fill="var(--pace-color)" stroke="#047857" stroke-width="2" stroke-linejoin="round" />
                     </g>
                 </svg>
                 <div class="gauge-center">
