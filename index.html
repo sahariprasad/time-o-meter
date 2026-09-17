@@ -300,42 +300,6 @@
             color: #fff;
         }
 
-        /* Compass */
-        .compass-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 0.25rem;
-            color: #94a3b8;
-        }
-
-        .compass-arrow {
-            transition: transform 0.2s ease-out;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .compass-text {
-            font-size: 0.9rem;
-            font-weight: 300;
-            letter-spacing: 1px;
-            display: flex;
-            gap: 0.5rem;
-            align-items: center;
-            justify-content: center;
-        }
-
-        @media (orientation: landscape) {
-            .compass-container {
-                position: absolute;
-                top: 1.5rem;
-                left: 50%;
-                transform: translateX(-50%);
-                z-index: 10;
-            }
-        }
-
         /* Modal Styles */
         dialog {
             background: var(--panel-bg);
@@ -382,19 +346,6 @@
     <div class="dashboard">
         <button id="toggle-settings" class="icon-btn">⚙️</button>
         <h1 class="app-title">time-o-meter</h1>
-
-        <!-- COMPASS -->
-        <div class="compass-container">
-            <div id="compass-arrow" class="compass-arrow">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--accent-color)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <polygon points="12 2 19 22 12 17 5 22 12 2"></polygon>
-                </svg>
-            </div>
-            <div class="compass-text">
-                <span id="compass-direction">--</span>
-                <span id="compass-angle">--°</span>
-            </div>
-        </div>
 
         <div class="cluster-wrapper">
             
@@ -493,10 +444,6 @@
         const paceTicks = document.getElementById('pace-ticks');
         const paceNeedle = document.getElementById('pace-needle');
 
-        const compassArrowEl = document.getElementById('compass-arrow');
-        const compassDirEl = document.getElementById('compass-direction');
-        const compassAngleEl = document.getElementById('compass-angle');
-
         const statusElement = document.getElementById('status');
         const debugElement = document.getElementById('debug');
         const unitBtns = document.querySelectorAll('.unit-btn');
@@ -535,7 +482,6 @@
         let lastPosition = null;
         let isPreviewMode = false;
         let wakeLock = null;
-        let currentHeading = null;
 
         const requestWakeLock = async () => {
             try {
@@ -573,13 +519,6 @@
         const MIN_PACE_MINUTES = 0.2; // Expanded to show 1 to 0 in detail
 
         function deg2rad(deg) { return deg * (Math.PI/180); }
-
-        function getDirectionString(heading) {
-            if (heading === null || isNaN(heading)) return '--';
-            const dirs = ['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW'];
-            const index = Math.round(heading / 45) % 8;
-            return dirs[index];
-        }
 
         function drawTicks(groupEl, maxValue, isPace) {
             groupEl.innerHTML = '';
@@ -751,17 +690,6 @@
             }
             paceArc.style.strokeDashoffset = ARC_LENGTH - (pacePercent * ARC_LENGTH);
             paceNeedle.setAttribute('transform', `rotate(${pacePercent * 270}, 120, 120)`);
-            
-            // Update Compass
-            if (currentHeading !== null && !isNaN(currentHeading)) {
-                compassAngleEl.textContent = `${Math.round(currentHeading)}°`;
-                compassDirEl.textContent = getDirectionString(currentHeading);
-                compassArrowEl.style.transform = `rotate(${currentHeading}deg)`;
-            } else {
-                compassAngleEl.textContent = '--°';
-                compassDirEl.textContent = '--';
-                compassArrowEl.style.transform = `rotate(0deg)`;
-            }
         }
 
         unitBtns.forEach(btn => {
@@ -811,8 +739,6 @@
             if (currentUnit === 'mph') currentSpeedMS = currentSpeedInUnit / MS_TO_MPH;
             else currentSpeedMS = currentSpeedInUnit / MS_TO_KMH;
             
-            currentHeading = percent * 360;
-            
             updateGauges();
         });
 
@@ -851,12 +777,6 @@
                             statusElement.textContent = 'Waiting for movement...';
                         }
                     }
-                    
-                    if (position.coords.heading !== null && !isNaN(position.coords.heading)) {
-                        currentHeading = position.coords.heading;
-                        debugInfo += `Heading: ${currentHeading.toFixed(1)}°<br>`;
-                    }
-
                     debugElement.innerHTML = debugInfo;
                     lastPosition = position;
                     updateGauges();
