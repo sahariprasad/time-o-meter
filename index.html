@@ -98,14 +98,12 @@
             fill: none;
             stroke: var(--track-color);
             stroke-width: 6;
-            stroke-linecap: round;
             stroke-dasharray: 471.24 628.32; /* 270 degrees (r=100) */
         }
 
         .gauge-fill {
             fill: none;
             stroke-width: 6;
-            stroke-linecap: round;
             stroke-dasharray: 471.24 628.32;
             stroke-dashoffset: 471.24;
             transition: stroke-dashoffset 0.2s linear;
@@ -353,7 +351,7 @@
                     <g id="speed-ticks"></g>
                     <circle class="gauge-track" cx="120" cy="120" r="100"></circle>
                     <circle id="speed-arc" class="gauge-fill speed-fill" cx="120" cy="120" r="100"></circle>
-                    <line id="speed-needle" x1="120" y1="120" x2="210" y2="120" stroke="url(#speed-grad)" stroke-width="3" stroke-linecap="round" style="transition: transform 0.2s linear; transform-box: view-box; transform-origin: center;" />
+                    <line id="speed-needle" x1="120" y1="120" x2="210" y2="120" stroke="url(#speed-grad)" stroke-width="3" style="transition: transform 0.2s linear; transform-box: view-box; transform-origin: center;" />
                 </svg>
                 <div class="gauge-center">
                     <div id="speed-val" class="gauge-value">0</div>
@@ -375,7 +373,7 @@
                     <g id="pace-ticks"></g>
                     <circle class="gauge-track" cx="120" cy="120" r="100"></circle>
                     <circle id="pace-arc" class="gauge-fill pace-fill" cx="120" cy="120" r="100"></circle>
-                    <line id="pace-needle" x1="120" y1="120" x2="210" y2="120" stroke="url(#pace-grad)" stroke-width="3" stroke-linecap="round" style="transition: transform 0.2s linear; transform-box: view-box; transform-origin: center;" />
+                    <line id="pace-needle" x1="120" y1="120" x2="210" y2="120" stroke="url(#pace-grad)" stroke-width="3" style="transition: transform 0.2s linear; transform-box: view-box; transform-origin: center;" />
                 </svg>
                 <div class="gauge-center">
                     <div id="pace-val" class="gauge-value">∞</div>
