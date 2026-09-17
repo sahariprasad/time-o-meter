@@ -12,9 +12,11 @@
             --text-color: #f8fafc;
             --accent-color: #ebc034;
             --pace-color: #10b981;
-            --track-color: #1e1e1e;
+            --speed-track-color: #2b2203;
+            --pace-track-color: #032b1e;
             --bezel-color: #1a1a1a;
             --panel-bg: #0a0a0a;
+            --font-family: 'Outfit', -apple-system, sans-serif;
         }
 
         body {
@@ -96,7 +98,6 @@
 
         .gauge-track {
             fill: none;
-            stroke: var(--track-color);
             stroke-width: 6;
             stroke-dasharray: 471.24 628.32; /* 270 degrees (r=100) */
         }
@@ -111,10 +112,12 @@
         
         .speed-fill { stroke: var(--accent-color); }
         .pace-fill { stroke: var(--pace-color); }
+        .speed-track { stroke: var(--speed-track-color); }
+        .pace-track { stroke: var(--pace-track-color); }
 
         .gauge-center {
             position: absolute;
-            top: 50%;
+            top: 60%;
             left: 50%;
             transform: translate(-50%, -50%);
             display: flex;
@@ -353,10 +356,10 @@
                     </defs>
                     <circle class="gauge-bezel" cx="120" cy="120" r="115"></circle>
                     <g id="speed-ticks"></g>
-                    <circle class="gauge-track" cx="120" cy="120" r="100"></circle>
+                    <circle class="gauge-track speed-track" cx="120" cy="120" r="100"></circle>
                     <circle id="speed-arc" class="gauge-fill speed-fill" cx="120" cy="120" r="100"></circle>
                     <g id="speed-needle" style="transition: transform 0.2s linear; transform-origin: 120px 120px;">
-                        <polygon points="214,120 226,114 226,126" fill="var(--accent-color)" stroke="#9c7a10" stroke-width="2" stroke-linejoin="round" />
+                        <polygon points="211,120 223,114 223,126" fill="var(--accent-color)" stroke="#9c7a10" stroke-width="2" stroke-linejoin="round" />
                     </g>
                 </svg>
                 <div class="gauge-center">
@@ -377,10 +380,10 @@
                     </defs>
                     <circle class="gauge-bezel" cx="120" cy="120" r="115"></circle>
                     <g id="pace-ticks"></g>
-                    <circle class="gauge-track" cx="120" cy="120" r="100"></circle>
+                    <circle class="gauge-track pace-track" cx="120" cy="120" r="100"></circle>
                     <circle id="pace-arc" class="gauge-fill pace-fill" cx="120" cy="120" r="100"></circle>
                     <g id="pace-needle" style="transition: transform 0.2s linear; transform-origin: 120px 120px;">
-                        <polygon points="214,120 226,114 226,126" fill="var(--pace-color)" stroke="#047857" stroke-width="2" stroke-linejoin="round" />
+                        <polygon points="211,120 223,114 223,126" fill="var(--pace-color)" stroke="#047857" stroke-width="2" stroke-linejoin="round" />
                     </g>
                 </svg>
                 <div class="gauge-center">
