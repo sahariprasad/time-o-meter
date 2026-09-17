@@ -518,14 +518,16 @@
             
             if (!isPace) {
                 // Linear Speed Scale
-                const numTicks = 10;
-                const angleStep = 270 / numTicks;
-                for (let i = 0; i <= numTicks; i++) {
-                    const angle = startAngle + (i * angleStep);
+                const tickStep = 10;
+                for (let val = 0; val <= maxValue; val += tickStep) {
+                    const percent = val / maxValue;
+                    const angle = startAngle + (percent * 270);
                     const rad = deg2rad(angle);
                     
+                    const isMajor = val % 40 === 0;
+                    
                     const rOuter = 95;
-                    const rInner = i % 2 === 0 ? 85 : 88;
+                    const rInner = isMajor ? 85 : 88;
                     
                     const x1 = center + rOuter * Math.cos(rad);
                     const y1 = center + rOuter * Math.sin(rad);
@@ -538,21 +540,19 @@
                     line.setAttribute("x2", x2);
                     line.setAttribute("y2", y2);
                     line.setAttribute("stroke", "#475569");
-                    line.setAttribute("stroke-width", i % 2 === 0 ? "2" : "1");
+                    line.setAttribute("stroke-width", isMajor ? "2" : "1");
                     groupEl.appendChild(line);
                     
-                    if (i % 2 === 0) {
+                    if (isMajor) {
                         const rText = 72;
                         const tx = center + rText * Math.cos(rad);
                         const ty = center + rText * Math.sin(rad);
-                        
-                        const val = Math.round((maxValue / numTicks) * i);
                         
                         const text = document.createElementNS("http://www.w3.org/2000/svg", "text");
                         text.setAttribute("x", tx);
                         text.setAttribute("y", ty);
                         text.setAttribute("fill", "#94a3b8");
-                        text.setAttribute("font-size", "14");
+                        text.setAttribute("font-size", "12");
                         text.setAttribute("font-family", "Outfit");
                         text.setAttribute("font-weight", "300");
                         text.setAttribute("text-anchor", "middle");
@@ -607,7 +607,7 @@
                         text.setAttribute("x", tx);
                         text.setAttribute("y", ty);
                         text.setAttribute("fill", "#94a3b8");
-                        text.setAttribute("font-size", "14");
+                        text.setAttribute("font-size", "12");
                         text.setAttribute("font-family", "Outfit");
                         text.setAttribute("font-weight", "300");
                         text.setAttribute("text-anchor", "middle");
