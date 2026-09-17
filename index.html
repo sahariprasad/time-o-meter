@@ -481,6 +481,34 @@
         let watchId = null;
         let lastPosition = null;
         let isPreviewMode = false;
+        let wakeLock = null;
+
+        const requestWakeLock = async () => {
+            try {
+                if ('wakeLock' in navigator) {
+                    wakeLock = await navigator.wakeLock.request('screen');
+                    wakeLock.addEventListener('release', () => {
+                        console.log('Wake Lock released');
+                    });
+                    console.log('Wake Lock acquired');
+                }
+            } catch (err) {
+                console.error(`Wake Lock error: ${err.name}, ${err.message}`);
+            }
+        };
+
+        const releaseWakeLock = async () => {
+            if (wakeLock !== null) {
+                await wakeLock.release();
+                wakeLock = null;
+            }
+        };
+
+        document.addEventListener('visibilitychange', async () => {
+            if (wakeLock !== null && document.visibilityState === 'visible') {
+                requestWakeLock();
+            }
+        });
 
         const MS_TO_KMH = 3.6;
         const MS_TO_MPH = 2.23694;
@@ -718,6 +746,9 @@
             if (isPreviewMode) return;
             startBtn.style.display = 'none';
             debugElement.style.display = 'block';
+            
+            // Request wake lock when starting GPS
+            requestWakeLock();
             
             if ('geolocation' in navigator) {
                 statusElement.textContent = 'Acquiring GPS...';
