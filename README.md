@@ -1,12 +1,14 @@
 # Time-o-meter
 
-Time-o-meter is a sleek, web-based GPS speedometer and pace tracker designed for runners, cyclists, and drivers. It features dynamic SVG gauges, a premium dark-mode aesthetic, and leverages modern browser APIs to provide real-time speed metrics without needing an app store installation.
+Time-o-meter is a sleek, web-based GPS speedometer and pace tracker designed for car drivers to understand how little a difference speeding makes over short distances. It features dynamic SVG gauges, a premium dark-mode aesthetic, and leverages modern browser APIs to provide real-time speed metrics without needing an app store installation.
 
 Feel free to visit [time-o-meter](https://sahariprasad.github.io/time-o-meter) to try it out!
 
 ## Behind the Scenes: Vibe Coding
 
-I was inspired to create this by [this video of Rory Sutherland](https://www.youtube.com/watch?v=Bc9jFbxrkMk&t=897s) that I came across while doomscrolling on YouTube. I wanted to see how **"vibe coding"** felt in practice. While the UI/UX, design choices, and overall aesthetic vision are entirely my own, the underlying code was generated using Gemini inside the Antigravity IDE. 
+I was inspired to create this by [this video of Rory Sutherland](https://www.youtube.com/watch?v=Bc9jFbxrkMk&t=897s) that I came across while doomscrolling on YouTube. I wanted to see how **"vibe coding"** felt in practice. While the UI/UX, design choices, and overall aesthetic vision are entirely my own, the underlying code was generated using Gemini inside the Antigravity IDE.
+
+> ⚠️ **Disclaimer of Liability and Warranty**: This software is provided "as is", without warranty of any kind, express or implied. In no event shall the author or copyright holder be liable for any claim, damages, or other liability—including but not limited to traffic violations, property damage, or personal injury—arising from, out of, or in connection with the use of this software.
 
 ## Features
 
